@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Import accounts from CSV files</title>
+{% endblock title %}
+
+
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Import Accounts</h2>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%} w-50 p-2" role="alert">
+            <strong>{{message.tags}}</strong> {{message}}
+            </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" class="form-inline">
+        {% csrf_token %}
+        <div class="form-group mb-2">
+            <label for="file" class="sr-only">File</label>
+            <input type="file" name="file" id="file" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 ml-2">Import</button>
+    </form>
+    <a href="{% url 'list_accounts' %}" class="btn btn-secondary mt-3">Back to Account List</a>
+</div>
+
+{% endblock body %}
+
+
