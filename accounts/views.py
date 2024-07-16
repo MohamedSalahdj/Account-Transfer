@@ -35,6 +35,10 @@ class AccountList(ListView):
 class AccountDetail(DetailView):
     model = Account
 
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(Account, pk=self.kwargs.get('pk'))
+        return obj
+
 
 def transfer_funds(request):
     if request.method == 'POST':
