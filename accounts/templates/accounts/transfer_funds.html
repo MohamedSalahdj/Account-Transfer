@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block title %}
+<title>Transfer Funds</title>
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-5 w-75">
+    <h2 class='my-3'>Transfer Funds</h2>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}}{%endif%} w-50 p-2" role="alert">
+            <strong>{{message.tags}}</strong> {{message}}
+            </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    <form method="post" class="form" id="transferForm">
+        {% csrf_token %}
+        {{ form.source_account|bootstrap }}
+        <div id="sourceBalance" class="my-3"></div>
+        {{ form.target_account|bootstrap }}
+        <div id="targetBalance" class="my-3"></div>
+        {{ form.amount|bootstrap }}
+        <button type="submit" class="btn btn-primary mt-2 w-100">Transfer</button>
+    </form>
+    <a href="{% url 'account_list' %}" class="btn btn-secondary mt-3 w-100">Back to Account List</a>
+
+   
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#id_source_account, #id_target_account').change(function() {
+        var accountId = $(this).val();
+        var fieldId = $(this).attr('id');
+        var displayField = (fieldId === 'id_source_account') ? '#sourceBalance' : '#targetBalance';
+        
+        $.ajax({
+            url: '{% url 'get_account_balance' %}',
+            data: {
+                'account_id': accountId
+            },
+            dataType: 'json',
+            success: function(data) {
+                $(displayField).text('Balance: ' + data.balance);
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+            }
+        });
+    });
+});
+</script>
+{% endblock body %}

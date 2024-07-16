@@ -1,38 +1,36 @@
 {% extends "base.html" %}
 {% load static %}
 
+
 {% block title %}
-    <title>Account List</title>
+<title>Transaction List</title>
 {% endblock %}
 
 {% block cssfiles %}
-    <link rel='stylesheet' href="{% static 'css/table_style.css' %}">
+<link rel='stylesheet' href="{% static 'css/table_style.css' %}">
 {% endblock cssfiles %}
 
 {% block body %}
 <div class="container mt-5">
-    <h2>Account List</h2>
-    <a href="{% url 'import_accounts' %}" class="btn btn-primary mb-3">Import Accounts</a>
+    <h2>Transaction List</h2>
     <table>
         <thead>
             <tr>
                 <th>Serial</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Balance</th>
-                <th>Actions</th>
+                <th>Sender</th>
+                <th>Receiver</th>
+                <th>Amount</th>
+                <th>Time</th>
             </tr>
         </thead>
         <tbody>
-            {% for account in account_list %}
+            {% for transaction in transaction_list %}
                 <tr>
                     <td>{{ forloop.counter|add:page_obj.start_index|add:"-1" }}</td>
-                    <td>{{ account.id }}</td>
-                    <td>{{ account.name }}</td>
-                    <td>{{ account.balance }}</td>
-                    <td>
-                        <a href="{% url 'account_detail' account.id %}" class="btn btn-info ">Details</a>
-                    </td>
+                    <td>{{ transaction.sender }}</td>
+                    <td>{{ transaction.receiver }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.timestamp }}</td>
                 </tr>
             {% endfor %}
         </tbody>

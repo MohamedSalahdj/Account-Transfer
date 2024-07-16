@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Account
+from .models import Account, Transaction
 
 
-admin.site.register(Account)
+
+class CustomiseAccount(admin.ModelAdmin):
+    search_fields = ['name']
+
+
+admin.site.register(Account, CustomiseAccount)
+admin.site.register(Transaction)
