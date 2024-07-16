@@ -81,3 +81,7 @@ def get_account_balance(request):
 class TransactionList(ListView):
     model = Transaction
     paginate_by = 25
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.select_related('sender', 'receiver')
