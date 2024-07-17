@@ -60,3 +60,11 @@ To run the Account-Transfer project locally, follow these steps:
 ```python
 python manage.py runserver
 ```
+
+## Running Tests 
+
+To run the test suite for the Account-Transfer project, follow these steps:
+
+```python
+python manage.py test
+```
